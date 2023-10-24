@@ -165,11 +165,11 @@ Then, answer the following questions by editing this `README.md`. Images can be 
 
 1. Evaluate your application based on the principles of universal design. Comment on (a) 2 principles that you have followed, and (b) 2 principles that you may have violated.
 
-INSERT YOUR RESPONSE HERE.
+![](_figures/step10_1.png)
 
 2. Please sketch how you want to improve the interface based on the universal design principles. You do **not** need to implement these changes as code. Instead, include your sketch as an attachment in the `_figures` folder, and insert it below.
 
-INSERT YOUR RESPONSE HERE.
+![](_figures/step10_2.png).
 
 ### Done! 🥳
 

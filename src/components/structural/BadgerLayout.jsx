@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 
@@ -6,12 +6,18 @@ import crest from '../../assets/uw-crest.svg'
 import BadgerLoginStatusContext from "../contexts/BadgerLoginStatusContext";
 
 function BadgerLayout(props) {
+    const storedLoginStatus = JSON.parse(sessionStorage.getItem('loginStatus'));
 
     // TODO @ Step 6:
     // You'll probably want to see if there is an existing
     // user in sessionStorage first. If so, that should
     // be your initial loginStatus state.
-    const [loginStatus, setLoginStatus] = useState(undefined)
+    const [loginStatus, setLoginStatus] = useState(storedLoginStatus || { loggedIn: false });
+
+    useEffect(() => {
+        // Save login status in sessionStorage whenever it changes
+        sessionStorage.setItem('loginStatus', JSON.stringify(loginStatus));
+    }, [loginStatus]);
 
     return (
         <div>
@@ -29,11 +35,21 @@ function BadgerLayout(props) {
                     </Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link as={Link} to="login">Login</Nav.Link>
-                        <Nav.Link as={Link} to="register">Register</Nav.Link>
+                        {loginStatus.loggedIn ? ( // Only show Logout when logged in
+                            <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
+                        ) : (
+                            <>
+                                <Nav.Link as={Link} to="login">Login</Nav.Link>
+                                <Nav.Link as={Link} to="register">Register</Nav.Link>
+                            </>
+                        )}
                         <NavDropdown title="Chatrooms">
                             {
-                                /* TODO Display a NavDropdown.Item for each chatroom that sends the user to that chatroom! */
+                                props.chatrooms.map(room => {
+                                    return <NavDropdown.Item key={room} as={Link} to={`chatrooms/${room}`}>
+                                        {room}
+                                    </NavDropdown.Item>
+                                })
                             }
                         </NavDropdown>
                     </Nav>
