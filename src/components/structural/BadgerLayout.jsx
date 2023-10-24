@@ -7,15 +7,9 @@ import BadgerLoginStatusContext from "../contexts/BadgerLoginStatusContext";
 
 function BadgerLayout(props) {
     const storedLoginStatus = JSON.parse(sessionStorage.getItem('loginStatus'));
-
-    // TODO @ Step 6:
-    // You'll probably want to see if there is an existing
-    // user in sessionStorage first. If so, that should
-    // be your initial loginStatus state.
     const [loginStatus, setLoginStatus] = useState(storedLoginStatus || { loggedIn: false });
 
     useEffect(() => {
-        // Save login status in sessionStorage whenever it changes
         sessionStorage.setItem('loginStatus', JSON.stringify(loginStatus));
     }, [loginStatus]);
 
@@ -35,7 +29,7 @@ function BadgerLayout(props) {
                     </Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        {loginStatus.loggedIn ? ( // Only show Logout when logged in
+                        {loginStatus.loggedIn ? ( 
                             <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
                         ) : (
                             <>
